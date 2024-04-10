@@ -1,0 +1,29 @@
+!set variable_substitution=true
+!variables
+!system echo "  Setting variables ... "
+-- ==============================================================================
+--- Variables to define Database, Read and admin role names.
+set database_name = 'FIN_FL_RESTR_&{ENV}_CURATED';
+set     read_role = 'FIN_FL_RESTR_&{ENV}_READ';
+set      raw_role = 'FIN_FL_RESTR_&{ENV}_RAW';
+set    admin_role = 'FIN_FL_RESTR_&{ENV}_ADMIN';
+USE ROLE PLATFORM_ADMIN;
+!system echo "Grant select view to share..."
+-- ==============================================================================
+-- Grant to share views from Snowflake Corporate to Snowflake Upstream
+!system echo "Grant usage on database FIN_FL_RESTR_CURATED"
+grant usage on database "FIN_FL_RESTR_&{ENV}_CURATED" to share S_CORP_UPST_FIN_FL_&{ENV};
+!system echo "Grant usage on schema FIN_SHARE from db FIN_FL_RESTR_CURATED"
+grant usage on schema "FIN_FL_RESTR_&{ENV}_CURATED"."FIN_SHARE" to share S_CORP_UPST_FIN_FL_&{ENV};
+!system echo "Grant reference_usage on database FIN_FL_RESTR_RAW"
+grant reference_usage on database "FIN_FL_RESTR_&{ENV}_RAW" to share S_CORP_UPST_FIN_FL_&{ENV};
+grant reference_usage on database "SEC_POLICY_&{ENV}" to share S_CORP_UPST_FIN_FL_&{ENV};
+!system echo "Grant select to secured views..."
+grant select on view "FIN_FL_RESTR_&{ENV}_CURATED"."FIN_SHARE"."VWS_GLPCA_AM_UPST" to share S_CORP_UPST_FIN_FL_&{ENV};
+grant select on view "FIN_FL_RESTR_&{ENV}_CURATED"."FIN_SHARE"."VWS_GLPCA_AP_UPST" to share S_CORP_UPST_FIN_FL_&{ENV};
+grant select on view "FIN_FL_RESTR_&{ENV}_CURATED"."FIN_SHARE"."VWS_GLPCA_EU_UPST" to share S_CORP_UPST_FIN_FL_&{ENV};
+--- ## Unset variables
+unset database_name;
+unset read_role;
+unset raw_role;
+unset admin_role;

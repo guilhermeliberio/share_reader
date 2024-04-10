@@ -1,0 +1,180 @@
+-- Statements to create External Shares are documented 
+
+-------------- Upstream JET Share------------------------------
+DROP SHARE S_CORP_UPST_FIN_JET_DEV;
+DESC SHARE S_CORP_UPST_FIN_JET_DEV;
+create share if not exists  S_CORP_UPST_FIN_JET_DEV;
+
+grant usage on database "FIN_UPST_RESTR_DEV_CURATED" to share  S_CORP_UPST_FIN_JET_DEV;
+grant reference_usage on database "FIN_UPST_RESTR_DEV_RAW" to share  S_CORP_UPST_FIN_JET_DEV;
+
+grant usage on schema "FIN_UPST_RESTR_DEV_CURATED"."FIN_SHARE" to share S_CORP_UPST_FIN_JET_DEV;
+grant select on  view "FIN_UPST_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_JET_CCA_ACTUAL_G3" to share  S_CORP_UPST_FIN_JET_DEV;
+grant select on  view "FIN_UPST_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_JET_CCA_ACTUAL_S8" to share  S_CORP_UPST_FIN_JET_DEV;
+grant select on  view "FIN_UPST_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_JET_FI_ACTUAL_G3" to share  S_CORP_UPST_FIN_JET_DEV;
+grant select on  view "FIN_UPST_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_JET_FI_ACTUAL_S8" to share  S_CORP_UPST_FIN_JET_DEV;
+
+alter share S_CORP_UPST_FIN_JET_DEV set comment='Upstream Financial database share from FED';
+alter share S_CORP_UPST_FIN_JET_DEV add account=dsa_upst;
+
+-------------- Upstream Financials Wrapper Share from Chemicals ------------------------------
+DROP SHARE S_CORP_UPST_FIN_CHEM_DEV;
+DESC SHARE S_CORP_UPST_FIN_CHEM_DEV;
+create share if not exists S_CORP_UPST_FIN_CHEM_DEV;
+
+grant usage on database "FIN_CHEM_RESTR_DEV_CURATED" to share S_CORP_UPST_FIN_CHEM_DEV;
+grant reference_usage on database "FIN_CHEM_RESTR_DEV_RAW" to share S_CORP_UPST_FIN_CHEM_DEV;
+
+grant usage on schema "FIN_CHEM_RESTR_DEV_CURATED"."FIN_SHARE" to share S_CORP_UPST_FIN_CHEM_DEV;
+grant select on  view "FIN_CHEM_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_GLPCA_G9_UPST" to share  S_CORP_UPST_FIN_CHEM_DEV;
+
+alter share S_CORP_UPST_FIN_CHEM_DEV set comment='Chemicals Financial database share from FED';
+alter share S_CORP_UPST_FIN_CHEM_DEV add account=dsa_upst;
+
+-------------- Upstream Financials Wrapper Share from FL ------------------------------
+DROP SHARE S_CORP_UPST_FIN_FL_DEV;
+DESC SHARE S_CORP_UPST_FIN_FL_DEV;
+create share if not exists S_CORP_UPST_FIN_FL_DEV;
+
+grant usage on database "FIN_FL_RESTR_DEV_CURATED" to share S_CORP_UPST_FIN_FL_DEV;
+grant reference_usage on database "FIN_FL_RESTR_DEV_RAW" to share S_CORP_UPST_FIN_FL_DEV;
+
+grant usage on schema "FIN_FL_RESTR_DEV_CURATED"."FIN_SHARE" to share S_CORP_UPST_FIN_FL_DEV;
+grant select on  view "FIN_FL_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_GLPCA_AM_UPST" to share  S_CORP_UPST_FIN_FL_DEV;
+grant select on  view "FIN_FL_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_GLPCA_AP_UPST" to share  S_CORP_UPST_FIN_FL_DEV;
+grant select on  view "FIN_FL_RESTR_DEV_CURATED"."FIN_SHARE"."VWS_GLPCA_EU_UPST" to share  S_CORP_UPST_FIN_FL_DEV;
+
+alter share S_CORP_UPST_FIN_FL_DEV set comment='FL Financial database share from FED';
+alter share S_CORP_UPST_FIN_FL_DEV add account=dsa_upst;
+
+------------- Upstream Financials RAW Data Share  ---------------------------------------------
+
+DROP SHARE S_CORP_UPST_JET_FIN_RAW_DEV;
+create share if not exists S_CORP_UPST_FIN_JET_RAW_DEV;
+
+alter share S_CORP_UPST_FIN_JET_RAW_DEV set comment='Upstream Financial database RAW share from FED';
+
+grant usage on database "FIN_UPST_RESTR_DEV_RAW" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+grant reference_usage on database "FIN_GENERAL_DEV_RAW" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+
+grant usage on schema "FIN_UPST_RESTR_DEV_RAW"."FIN_SHARE" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant usage on schema "FIN_UPST_RESTR_DEV_RAW"."SAP_G3_WRAP" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant usage on schema "FIN_UPST_RESTR_DEV_RAW"."SAP_G3" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant usage on schema "FIN_UPST_RESTR_DEV_RAW"."SAP_S8" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant usage on schema "FIN_UPST_RESTR_DEV_RAW"."SAP_XT" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+
+grant select on view "FIN_UPST_RESTR_DEV_RAW"."FIN_SHARE"."VWS_ZGFR01A_G3" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on view "FIN_UPST_RESTR_DEV_RAW"."FIN_SHARE"."VWS_ACDOCA_XT" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on view "FIN_UPST_RESTR_DEV_RAW"."FIN_SHARE"."VWS_ZGFR01A_S8" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on view "FIN_UPST_RESTR_DEV_RAW"."FIN_SHARE"."VWS_ZGFR01A_XT" to share S_CORP_UPST_FIN_JET_RAW_DEV;
+
+grant select on table "FIN_UPST_RESTR_DEV_RAW"."SAP_G3"."ZGFR01A" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on table "FIN_UPST_RESTR_DEV_RAW"."SAP_S8"."ZGFR01A" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on table "FIN_UPST_RESTR_DEV_RAW"."SAP_XT"."ZGFR01A" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on table "FIN_UPST_RESTR_DEV_RAW"."SAP_XT"."ACDOCA" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+grant select on table "FIN_UPST_RESTR_DEV_RAW"."SAP_XT"."ZGFR01A_ACDOCA" to share  S_CORP_UPST_FIN_JET_RAW_DEV;
+
+alter share S_CORP_UPST_FIN_JET_RAW_DEV add account=dsa_upst;
+
+------------- Upstream BAM Share ----------------------------------------
+DROP SHARE S_CORP_UPST_FIN_BAM_DEV;
+create share if not exists  S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on database "FIN_GENERAL_DEV_CURATED" to share S_CORP_UPST_FIN_BAM_DEV;
+grant reference_usage on database "FIN_GENERAL_DEV_RAW" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_COSTCENTER" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_COSTCENTER"."VWS_COSTCENTER_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_COSTCENTER"."VWS_COSTCENTER_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_CUSTOMER" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_CUSTOMER"."VWS_CUSTOMER_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_WBS_PROJECT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_WBS_PROJECT"."VWS_WBS_PROJECT_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_WBS_PROJECT"."VWS_WBS_PROJECT_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_PROFIT_CENTER" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_PROFIT_CENTER"."VWS_PROFIT_CENTER_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_PROFIT_CENTER"."VWS_PROFIT_CENTER_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_PROFIT_CENTER"."VWS_WORLD_WIDE_PROFIT_CENTER_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_PROFIT_CENTER"."VWS_WORLD_WIDE_PROFIT_CENTER_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_COMPANY_CODE" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_COMPANY_CODE"."VWS_COMP_CODE_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_COMPANY_CODE"."VWS_COMP_CODE_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_ACCOUNT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_ACCOUNT"."VWS_ACCOUNT_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_ACCOUNT"."VWS_ACCOUNT_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_FI" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_FI"."VWS_BUSINESS_AREA_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_FI"."VWS_BUSINESS_AREA_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_FI"."VWS_FUNCTIONAL_AREA_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_FI"."VWS_FUNCTIONAL_AREA_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_FI"."VWS_ORDER_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_MATERIAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_MATERIAL"."VWS_MATERIAL_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+
+grant usage on schema "FIN_GENERAL_DEV_CURATED"."BAM_GENERAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_GENERAL"."VWS_COUNTRY_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_GENERAL"."VWS_RECOVERY_INDICATOR_CORP_HISTORICAL" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_GENERAL"."VWS_RECOVERY_INDICATOR_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+grant select on  view "FIN_GENERAL_DEV_CURATED"."BAM_GENERAL"."VWS_LOCAL_RI_CORP_CURRENT" to share S_CORP_UPST_FIN_BAM_DEV;
+
+alter share  S_CORP_UPST_FIN_BAM_DEV set comment='Upstream Financial BAM share from FED';
+alter share  S_CORP_UPST_FIN_BAM_DEV add account=dsa_upst;
+
+--------------  Upstream BAM - RAW Data Share -------------------------------
+DESC SHARE S_CORP_UPST_FIN_BAM_RAW_DEV;
+create share if not exists S_CORP_UPST_FIN_BAM_RAW_DEV;
+
+grant usage on database "FIN_GENERAL_DEV_RAW" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant usage on schema "FIN_GENERAL_DEV_RAW"."FIN_SHARE" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_HRRP_NODET_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_HRRP_NODE_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETHEADERT_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETHEADERT_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETLEAF_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETLEAF_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETNODE_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_SETNODE_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_YFICO_CSKS_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZZ_STAGING_YWXCO_GRDB" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGFRBA_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGFRRI_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRDC2B_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRDC2D_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRDC2T_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRDC3T_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRDCDATE_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG1T_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG1T_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG1T_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2T_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2T_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2T_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2_G3" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2_S8" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+grant select on  view "FIN_GENERAL_DEV_RAW"."FIN_SHARE"."VWS_ZGRECG2_XT" to share S_CORP_UPST_FIN_BAM_RAW_DEV;
+
+
+alter share S_CORP_UPST_FIN_BAM_RAW_DEV set comment='Upstream Financial BAM share from FED';
+alter share S_CORP_UPST_FIN_BAM_RAW_DEV add account=dsa_upst;
+
+-------------------------------------- Ops FED Share----------------------------------------------
+DESC SHARE S_CORP_OPS_TEMP;
+
+create share if not exists S_CORP_OPS_TEMP;
+drop share S_CORP_OPS_TEMP;
+
+grant usage on database "FIN_GENERAL_DEV_RAW" to share  S_CORP_OPS_TEMP;
+grant usage on schema "FIN_GENERAL_DEV_RAW"."SAP_G9" to share S_CORP_OPS_TEMP;
+grant select on table "FIN_GENERAL_DEV_RAW"."SAP_G9"."COBRB" to share S_CORP_OPS_TEMP;
+
+alter share S_CORP_OPS_TEMP set comment='Corp Financial share from FED';
+alter share S_CORP_OPS_TEMP add account=il32816;
+-------------------------------------- End of OPS Share---------------------------------------------

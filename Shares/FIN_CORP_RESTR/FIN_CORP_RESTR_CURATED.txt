@@ -1,0 +1,39 @@
+!set variable_substitution=true
+!variables
+
+!system echo "  Setting variables ... "
+-- ==============================================================================
+--- Variables to define Database, Read and admin role names.
+set database_name = 'FIN_CORP_RESTR_&{ENV}_CURATED';
+set read_role = 'FIN_CORP_RESTR_&{ENV}_READ';
+set admin_role = 'FIN_CORP_RESTR_&{ENV}_ADMIN';
+
+-- ==============================================================================
+show variables;
+USE ROLE PLATFORM_ADMIN;
+
+!system echo "  GRANT REF FIN_GENERAL_&{ENV}_RAW "
+grant REFERENCE_USAGE on Database FIN_GENERAL_&{ENV}_RAW to share S_CORP_UPST_FIN_CORP_&{ENV}; 
+
+!system echo "  GRANT REF FIN_CORP_RESTR_&{ENV}_RAW "
+grant REFERENCE_USAGE on Database FIN_CORP_RESTR_&{ENV}_RAW to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+!system echo "  GRANT REF FIN_GENERAL_&{ENV}_CURATED "
+grant REFERENCE_USAGE on Database FIN_GENERAL_&{ENV}_CURATED to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+!system echo "  GRANT USAGE DB FIN_CORP_RESTR_&{ENV}_CURATED "
+grant USAGE on Database FIN_CORP_RESTR_&{ENV}_CURATED to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+!system echo "  GRANT USAGE Schema FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE "
+grant USAGE on schema FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+!system echo "  GRANT SELECT FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_ERA_TRAN_DFX_GLOBAL_UPST "
+GRANT SELECT ON VIEW FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_ERA_TRAN_DFX_GLOBAL_UPST to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+!system echo "  GRANT SELECT FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_ERA_DFX_TRAN_LIVE_UFO_SHARE "
+GRANT SELECT ON VIEW FIN_CORP_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_ERA_DFX_TRAN_LIVE_UFO_SHARE to share S_CORP_UPST_FIN_CORP_&{ENV};
+
+--- ## Unset variables
+unset database_name;
+unset read_role;
+unset admin_role;

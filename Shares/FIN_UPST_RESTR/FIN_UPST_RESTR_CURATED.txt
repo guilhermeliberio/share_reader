@@ -1,0 +1,60 @@
+!set variable_substitution=true
+!variables
+
+!system echo "  Setting variables ... "
+-- ==============================================================================
+--- Variables to define Database, Read and admin role names.
+
+set database_name = 'FIN_UPST_RESTR_&{ENV}_CURATED';
+set     read_role = 'FIN_UPST_RESTR_&{ENV}_READ';
+set     raw_role = 'FIN_UPST_RESTR_&{ENV}_RAW';
+set    admin_role = 'FIN_UPST_RESTR_&{ENV}_ADMIN';
+
+USE ROLE PLATFORM_ADMIN;
+USE WAREHOUSE DEVOPS_WH;
+!system echo "Grant select view to share..."
+-- ==============================================================================
+-- Grant to Share views from Snowflake Corporate to Snowflake Upstream
+---grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DNVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_FI_OPENING_BALANCES_ID to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_FI_ACTUAL_G3 to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_FI_ACTUAL_ID to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_FI_ACTUAL_S8 to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_WWSL_DETAIL_ACTUAL_G3 to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_WWSL_DETAIL_ACTUAL_S8 to share S_CORP_UPST_FIN_JET_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_JET_WWSL_TOTAL_ACTUAL_G3 to share S_CORP_UPST_FIN_JET_&{ENV};
+
+!system echo "Kepler grants started..."
+execute immediate $$
+begin
+let is_valid := '&{ENV}';
+  
+case when ((is_valid='DEV') or (is_valid='PRD')) then
+
+    GRANT REFERENCE_USAGE on Database FIN_UPST_RESTR_&{ENV}_CURATED to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV}; 
+    GRANT USAGE on DATABASE FIN_UPST_RESTR_&{ENV}_CURATED to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV};
+
+    GRANT USAGE on SCHEMA FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV};
+
+    GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_ACCOUNTING_UPST to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV};
+    GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_CONTROLLING_DOCUMENT_UPST to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV};
+    GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_CURATED.FIN_SHARE.VWS_PM_COST_UPST to share S_CORP_KEPLER_FIN_CHEM_TRAN_&{ENV};
+
+  return 'Grant VIEW to READ role in DEV/PRD';
+else
+  return 'No Grant VIEW to READ role in ACC';
+end;
+end
+$$;
+
+!system echo "Kepler grants completed"
+
+
+
+
+
+--- ## Unset variables
+unset database_name;
+unset read_role;
+unset raw_role;
+unset admin_role;

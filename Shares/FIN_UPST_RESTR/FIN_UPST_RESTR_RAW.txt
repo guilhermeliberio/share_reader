@@ -1,0 +1,118 @@
+!set variable_substitution=true
+!variables
+
+!system echo "  Setting variables ... "
+-- ==============================================================================
+--- Variables to define Database, Read and admin role names.
+
+set database_name = 'FIN_UPST_RESTR_&{ENV}_CURATED';
+set     read_role = 'FIN_UPST_RESTR_&{ENV}_READ';
+set      raw_role = 'FIN_UPST_RESTR_&{ENV}_RAW';
+set    admin_role = 'FIN_UPST_RESTR_&{ENV}_ADMIN';
+
+USE ROLE PLATFORM_ADMIN;
+!system echo "Grant select view to share..."
+-- ==============================================================================
+-- Grant to Share views from Snowflake Corporate to Snowflake Upstream
+---grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DNVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+
+-- Grant to Share views from Snowflake Corporate to Snowflake Upstream
+---grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DNVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ACDOCA_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_JET_ID to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_POSTED_JOURNAL_ID to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_POSTED_JOURNAL_IDEAS to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YWS01A_S8 to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZGFR01A_G3 to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZGFR01A_S8 to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZGFR01A_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+
+!system echo "Grant select view to share... these should fail in Production"
+
+--These below may fail
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_JVS_REVIEWED_JOURNALS to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_JVS_PENDING_APPROVAL to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_EXCLUDED_COMPANIES_ID to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DNVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_MP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_MPVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_CPDC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_DO_PUC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_DO_TR_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV}; 
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_CTTYP_TX_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_CTTYP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_MKCT_TX_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_MKCT_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_PDCD_TX_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_PDCD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_DO_DI_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DN_LINK_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_DN_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_MPTRNH_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_NODE_DN_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_NODE_MP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_NODE_WC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_WC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_WCDVLH_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_WCVD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_WELL_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIUCA_CTMP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIUCA_CTWC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIUCM_CONTRACT_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_PRA_ACCT_DOC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRPR_MIDMP_XREF_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRRE_CT_XREF_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRRE_CT_XREF_SF_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_CTRWC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_DOIWC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_DO_DO_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_MAT_PRCD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_DO_DP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_MPVL_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_ACTMP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_ACTWC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_CTRMP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_DOIMP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_RNAMP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_SB_RNAWC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_T8J1D_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRPR_DCVT_XREF_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRPR_GSDN_XREF_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRPR_PDN_EXCEP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YPRRE_88_ACC_DOC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRAGP_RNACT_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRTGP_D1_WETGAS_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRTGP_D2_PR_VTP_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRTGP_D4_ALLDTL_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRTGPHDRDOC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_ZPRTGPPRDNDOC_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_BALANCE_IDEAS to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_EM_FED_GL_BALANCE_ID to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_CM_PINTTY_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+grant select on view FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_PRA_BP_VEND_MD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+!system echo "Grant Read Access to VWS_PRA_BP_VEND_MD_XT"
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_OIU_PR_FIELD_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_TCJET_XT   to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YFIFR_MAT_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_SETHEADERT_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YFICO_ACCR_KST_A_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_TJ30T_XT to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_YFICO_ACCR_TYPE_XT   to share S_CORP_UPST_FIN_JET_RAW_&{ENV};
+
+!system echo "Grant Read Access to VWS_YFICO_ACCR_TYPE_XT"
+
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_COBK_S8   to share   S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_RPSCO_S8  to share   S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+grant reference_usage on database fin_upst_restr_&{ENV}_raw to share S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+grant reference_usage on database fin_general_&{ENV}_raw to share S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+grant reference_usage on database sec_policy_&{ENV_NACC} to share S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+GRANT SELECT ON VIEW FIN_UPST_RESTR_&{ENV}_RAW.FIN_SHARE.VWS_COEP_S8   to share   S_CORP_OPS_FIN_UPST_RESTR_RAW_&{ENV};
+
+!system echo "Grant Read Access to VWS_COEP_S8"
+
+--- ## Unset variables
+unset database_name;
+unset read_role;
+unset raw_role;
+unset admin_role;
