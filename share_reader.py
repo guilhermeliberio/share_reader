@@ -15,17 +15,17 @@ for file in files:
             splits = line.split(" to share ")
             key = splits[-1].strip()[0:-1]
             value = splits[0].strip().split(" ")[-1].strip('""')
-            if "SHARE" in value:
-                if key in share_dict:
-                    share_dict[key].append(value)
-                else:
-                    share_dict[key] = [value]
-
+            if "VWS" in value:
+                if "_EU_" in value: value.replace("_EU_", "")
+                if "_AP_" in value: value.replace("_AP_", "")
+                if "_AM_" in value: value.replace("_AM_", "")
+                if key in share_dict and value not in share_dict[key]: share_dict[key].append(value)
+                else: share_dict[key] = [value]
 
 with open('output.csv', 'w') as output:
     writer = csv.writer(output)
     for key, value in share_dict.items():
         writer.writerow([key, value, len(value)])
 
-pp.pprint(share_dict)
+# pp.pprint(share_dict)
     
