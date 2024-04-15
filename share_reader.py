@@ -1,6 +1,6 @@
 import os
 import csv
-import pprint as pp
+# import pprint as pp
 
 share_dict = {}
 files = [os.path.join('Shares\\FIN_CORP_RESTR\\', 'FIN_CORP_RESTR_CURATED.txt'), os.path.join('Shares\\FIN_CORP_RESTR\\', 'FIN_CORP_RESTR_RAW.txt'),
