@@ -32,4 +32,6 @@ with open('output.csv', 'w') as output:
     for key, value in share_dict.items():
         writer.writerow([key, value, len(value)])
 
+pp.pprint(share_dict)
+
     
