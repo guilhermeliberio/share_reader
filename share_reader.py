@@ -21,10 +21,9 @@ for file in files:
                 for source in source_string.split(" "):
                     if value.find(source) != -1:
                         value = value.replace(source, "")
-                else:
-                    last_split = value.split("_")[-1]
-                    if last_split in source_string:
-                        value = value.replace("_" + last_split, "")
+                last_split = value.split("_")[-1]
+                if last_split in source_string:
+                    value = value.replace("_" + last_split, "")
                 if key not in share_dict: share_dict[key] = [value]
                 elif value not in share_dict[key]: share_dict[key].append(value)
         
